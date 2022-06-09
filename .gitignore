@@ -107,3 +107,5 @@ transformer-test/.DS_Store
 
 
 transformer-test/dist/*
+
+dist/**

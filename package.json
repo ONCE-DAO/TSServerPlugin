@@ -1,33 +1,25 @@
 {
-  "name": "thinglish-transformer",
-  "namespace": "tla.EAM",
+  "name": "onceTSServerPlugin",
+  "namespace": "tla.EAM.Thinglish",
   "version": "0.1.1",
-  "description": "transform classes to reflective components",
+  "description": "Plugin for VSCode TSServer",
   "main": "dist/index.js",
-  "author": "Marcel Donges",
+  "author": "Benedikt Eckstein",
   "license": "AGPL-3.0",
   "scripts": {
-    "prepare": "ts-patch install",
-    "start": "cd transformer-test && npx tsc",
-    "test": "jest",
-    "compTest": "npx tsc ; cd transformer-test; npx tsc"
+    "build": "npx tsc"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ONCE-DAO/thinglish.transformer.git"
+    "url": "git+https://github.com/ONCE-DAO/TSServerPlugin.git"
   },
   "bugs": {
-    "url": "https://github.com/ONCE-DAO/thinglish.transformer/issues"
+    "url": "https://github.com/ONCE-DAO/TSServerPlugin/issues"
   },
-  "homepage": "https://github.com/ONCE-DAO/thinglish.transformer#readme",
+  "homepage": "https://github.com/ONCE-DAO/TSServerPlugin#readme",
   "devDependencies": {
     "@types/node": "^17.0.21",
     "typescript": "^4.5.4"
   },
-  "dependencies": {
-    "npm-run-all": "^4.1.5",
-    "reflect-metadata": "github:rbuckton/reflect-metadata",
-    "rimraf": "^3.0.2",
-    "ts-patch": "^2.0.1"
-  }
+  "dependencies": {}
 }
