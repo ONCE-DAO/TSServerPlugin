@@ -1,3 +1,5 @@
+import * as fs from 'fs';
+
 function init(modules: { typescript: typeof import("typescript/lib/tsserverlibrary") }) {
   const ts = modules.typescript;
 
@@ -11,10 +13,17 @@ function init(modules: { typescript: typeof import("typescript/lib/tsserverlibra
       "I'm getting set up now! Check the log for this message."
     );
 
+    info.languageService.applyCodeActionCommand;
+
+
+    let x2: ts.CreateProgramOptions
+
     // Set up decorator object
     const proxy: ts.LanguageService = Object.create(null);
     for (let k of Object.keys(info.languageService) as Array<keyof ts.LanguageService>) {
       const x = info.languageService[k]!;
+      console.log("Add Proxy for " + x.name);
+
       // @ts-expect-error - JS runtime trickery which is tricky to type tersely
       proxy[k] = (...args: Array<{}>) => {
 
@@ -27,35 +36,84 @@ function init(modules: { typescript: typeof import("typescript/lib/tsserverlibra
       }
     }
 
-    // Remove specified entries from completion list
-    proxy.getCompletionsAtPosition = (fileName, position, options) => {
-      // This is just to let you hook into something to
-      // see the debugger working
-      //debugger
 
-      const prior = info.languageService.getCompletionsAtPosition(fileName, position, options);
-      if (!prior) return
+    // // Remove specified entries from completion list
+    // proxy.getCompletionsAtPosition = (fileName, position, options) => {
+    //   // This is just to let you hook into something to
+    //   // see the debugger working
+    //   //debugger
 
-      const oldLength = prior.entries.length;
-      prior.entries = prior.entries.filter(e => whatToRemove.indexOf(e.name) < 0);
+    //   const prior = info.languageService.getCompletionsAtPosition(fileName, position, options);
+    //   if (!prior) return
 
-      // Sample logging for diagnostic purposes
-      if (oldLength !== prior.entries.length) {
-        const entriesRemoved = oldLength - prior.entries.length;
-        info.project.projectService.logger.info(
-          `Removed ${entriesRemoved} entries from the completion list`
-        );
-      }
+    //   const oldLength = prior.entries.length;
+    //   prior.entries = prior.entries.filter(e => whatToRemove.indexOf(e.name) < 0);
 
-      return prior;
-    };
+    //   // Sample logging for diagnostic purposes
+    //   if (oldLength !== prior.entries.length) {
+    //     const entriesRemoved = oldLength - prior.entries.length;
+    //     info.project.projectService.logger.info(
+    //       `Removed ${entriesRemoved} entries from the completion list`
+    //     );
+    //   }
+
+    //   return prior;
+    // };
 
 
-    proxy.getCodeFixesAtPosition = (ileName: string, start: number, end: number, errorCodes: readonly number[], formatOptions: ts.FormatCodeSettings, preferences: ts.UserPreferences) => {
+    //   proxy.getCodeFixesAtPosition = (ileName: string, start: number, end: number, errorCodes: readonly number[], formatOptions: ts.FormatCodeSettings, preferences: ts.UserPreferences) => {
 
-      const prior = info.languageService.getCodeFixesAtPosition(ileName, start, end, errorCodes, formatOptions, preferences);
-      return prior;
-    }
+    //     let error;
+    //     let prior;
+    //     try {
+    //       prior = info.languageService.getCodeFixesAtPosition(ileName, start, end, errorCodes, formatOptions, preferences);
+    //     } catch (e) {
+    //       error = e;
+    //     }
+
+    //     let fileName = "tsconfig.json";
+    //     let content = fs.readFileSync(fileName).toString();
+    //     let x = ts.parseConfigFileTextToJson(fileName, content)
+
+    //     let name = "DefaultUrl"
+
+    //     let program = info.languageService.getProgram();
+    //     if (program === undefined) {
+    //       if (error) throw error;
+    //       if (prior === undefined) throw new Error("Never happens");
+    //       return prior;
+    //     }
+    //     let compilerOptions = program.getCompilerOptions();
+    //     let typeChecker = program.getTypeChecker();
+    //     let sourceFiles = program.getSourceFiles();
+
+    //     let filteredFiles = sourceFiles.filter(file => file.fileName.match('src/index.ts') && !file.fileName.match('node_module'));
+
+    //     filteredFiles
+    //     if (compilerOptions.paths) {
+    //       for (let ior of Object.keys(compilerOptions.paths)) {
+    //         let componentPath = compilerOptions.paths[ior];
+    //         let sourceFile = filteredFiles.filter(file => file.fileName.match(componentPath[0]));
+    //         if (sourceFile.length > 0) {
+    //           // @ts-ignore
+    //           let symbol: ts.Symbol = sourceFile[0].symbol;
+    //           //@ts-ignore
+    //           let obj = symbol.exports?.get(name);
+    //           if (obj) {
+    //             program.
+    //             obj;
+    //           }
+    //         }
+
+    //       }
+    //     }
+
+    //     let a = ts.factory.createModuleDeclaration
+
+    //     if (error) throw error;
+    //     if (prior === undefined) throw new Error("Never happens");
+    //     return prior;
+    //   }
 
     return proxy;
   }
