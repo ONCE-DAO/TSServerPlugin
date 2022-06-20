@@ -109,3 +109,6 @@ transformer-test/.DS_Store
 transformer-test/dist/*
 
 dist/**
+
+# TODO check with bene
+dist
