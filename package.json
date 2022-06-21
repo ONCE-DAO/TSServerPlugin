@@ -1,5 +1,5 @@
 {
-  "name": "onceTSServerPlugin",
+  "name": "OnceTSServerPlugin",
   "namespace": "tla.EAM.Thinglish",
   "version": "0.1.1",
   "description": "Plugin for VSCode TSServer",
